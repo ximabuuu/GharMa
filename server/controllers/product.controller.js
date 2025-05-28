@@ -4,9 +4,9 @@ import ProductModel from "../models/product.model.js"
 
 export const AddProductController = async (req, res) => {
     try {
-        const { name, image, category, subCategory, restaurant, unit, stock, price, discount, description, more_details } = req.body
+        const { name, image, category, subCategory, unitName, pricingModel, BasePrice, pricePerUnit, discount, description, minUnits, more_details, addOns } = req.body
 
-        if (!name || !image[0] || !category[0] || !subCategory[0] || !restaurant[0] || !unit || !stock || !price || !discount || !description) {
+        if (!name || !image[0] || !category[0] || !subCategory[0] || !unitName || !pricingModel || !BasePrice || !pricePerUnit || !discount || !description) {
             return res.status(400).json({
                 message: "Enter Required Fields",
                 error: true,
@@ -19,10 +19,12 @@ export const AddProductController = async (req, res) => {
             image,
             category,
             subCategory,
-            restaurant,
-            unit,
-            stock,
-            price,
+            unitName,
+            pricePerUnit,
+            BasePrice,
+            pricingModel,
+            minUnits,
+            addOns,
             discount,
             description,
             more_details,
@@ -61,7 +63,7 @@ export const getProductController = async (req, res) => {
         const skip = (page - 1) * limit
 
         const [data, totalcount] = await Promise.all([
-            ProductModel.find(query).sort({createdAt : -1}).skip(skip).limit(limit).populate('category subCategory restaurant'),
+            ProductModel.find(query).sort({createdAt : -1}).skip(skip).limit(limit).populate('category subCategory '),
             ProductModel.countDocuments(query)
         ])
 

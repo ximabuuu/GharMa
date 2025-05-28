@@ -5,7 +5,7 @@ import UserModel from "../models/user.model.js";
 
 const EsewaInitiatePayment = async (req, res) => {
   const userId = req.userId
-  const { amount, productId, list_items, addressId, totalQty } = req.body;  //data coming from frontend
+  const { amount, productId, list_items, addressId, totalQty } = req.body;  
   try {
 
 
@@ -35,7 +35,7 @@ const EsewaInitiatePayment = async (req, res) => {
         totalQty: totalQty,
         delivery_address: addressId,
         orderStatus: "Pending",
-        rider: null
+        worker: null
       });
       const saveTransaction = await transaction.save();
 
@@ -59,9 +59,9 @@ const EsewaInitiatePayment = async (req, res) => {
 
 
 const paymentStatus = async (req, res) => {
-  const { product_id } = req.body; // Extract data from request body
+  const { product_id } = req.body; 
   try {
-    // Find the transaction by its signature
+    
     const transaction = await TransactionModel.findOne({ product_id });
     if (!transaction) {
       return res.status(400).json({ message: "Transaction not found" });
@@ -72,7 +72,7 @@ const paymentStatus = async (req, res) => {
 
 
     if (paymentStatusCheck.status === 200) {
-      // Update the transaction status
+      
       transaction.status = paymentStatusCheck.data.status;
       await transaction.save();
       res
@@ -93,7 +93,7 @@ export const fetchAllTransaction = async (req, res) => {
     const AllTrans = await TransactionModel.find()
       .populate('userId')
       .populate('delivery_address', 'city mobile address_line')
-      .populate('rider', 'name mobile')
+      .populate('worker', 'name mobile')
 
     return res.json({
       message: "All Transaction Fetched.",
@@ -118,7 +118,7 @@ export const getUserTransaction = async (req, res) => {
     const userOrders = await TransactionModel.find({ userId: userId })
       .populate("userId")
       .populate("delivery_address")
-      .populate("rider", 'name mobile')
+      .populate("worker", 'name mobile')
       .sort({ createdAt: -1 })
 
     return res.json({
@@ -140,21 +140,21 @@ export const getUserTransaction = async (req, res) => {
 export const updateEsewaStatus = async (req, res) => {
   const { orderId } = req.params;
   const { orderStatus } = req.body;
-  const riderId = req.userId; // Extract rider ID from authenticated user
+  const workerId = req.userId; 
 
   try {
     // Fetch the user details
-    const rider = await UserModel.findById(riderId);
+    const worker = await UserModel.findById(workerId);
 
-    if (!rider || rider.role !== "RIDER") {
-      return res.status(403).json({ message: "Only riders can accept orders" });
+    if (!worker || worker.role !== "WORKER") {
+      return res.status(403).json({ message: "Only workers can accept orders" });
     }
 
     const updatedOrder = await TransactionModel.findByIdAndUpdate(
       orderId,
-      { orderStatus, rider: riderId }, // Assign Rider
+      { orderStatus, worker: workerId }, 
       { new: true }
-    ).populate("rider", "name mobile"); // Populate Rider Details
+    ).populate("worker", "name mobile"); 
 
     if (!updatedOrder) {
       return res.status(404).json({ message: "Order not found" });

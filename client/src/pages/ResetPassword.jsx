@@ -98,7 +98,7 @@ const ResetPassword = () => {
         <form className='grid gap-4 mt-6' onSubmit={handleSubmit}>
            <div className='grid gap-1'>
                 <label htmlFor="newPassword">Enter Your New Password</label>
-                <div className='bg-blue-50 p-2 border rounded flex items-center focus-within:border-red-800'>
+                <div className='bg-blue-50 p-2 border rounded flex items-center focus-within:border-[#4a90e2]'>
                     <input type={showPassword ? "text" : "password"} className='w-full outline-none' name="newPassword" id="password" placeholder='Enter Your Password' autoFocus value={data.newPassword} onChange={handleChange} />
                         <div onClick={()=> setShowPassword(preve => !preve)} className='cursor-pointer'>
                                {
@@ -115,7 +115,7 @@ const ResetPassword = () => {
             </div>
             <div className='grid gap-1'>
                 <label htmlFor="confirmPassword">Confirm Password</label>
-                <div className='bg-blue-50 p-2 border rounded flex items-center focus-within:border-red-800'>
+                <div className='bg-blue-50 p-2 border rounded flex items-center focus-within:border-[#4a90e2]'>
                     <input type={showConfirmPassword ? "text" : "password"} className='w-full outline-none' name="confirmPassword" id="password" placeholder='Enter Your Confirm Password'  value={data.confirmPassword} onChange={handleChange} />
                         <div onClick={()=> setShowConfirmPassword(preve => !preve)} className='cursor-pointer'>
                                {
@@ -133,10 +133,10 @@ const ResetPassword = () => {
         
             
 
-            <button disabled={!filled} className={`${filled ? "bg-red-800 hover:bg-red-600" : "bg-gray-600"} text-white py-2 rounded font-semibold my-3 tracking-widest`}>Change Password</button>
+            <button disabled={!filled} className={`${filled ? "bg-[#4a90e2] hover:bg-blue-700" : "bg-gray-600"} text-white py-2 rounded font-semibold my-3 tracking-widest`}>Change Password</button>
             
         </form>
-        <p> Already have an Account? <Link to={"/login"} className='font-semibold text-red-800 hover:text-red-600'>Login</Link></p> 
+        <p> Already have an Account? <Link to={"/login"} className='font-semibold text-[#4a90e2] hover:text-blue-700'>Login</Link></p> 
       </div>
     </section>
   )

@@ -1,83 +1,94 @@
 import mongoose from "mongoose";
 
-const productSchema =new mongoose.Schema({
-    name : {
-        type : String,
+
+const AddOnSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+});
+
+
+const productSchema = new mongoose.Schema({
+    name: {
+        type: String,
     },
-    image : {
-        type : Array,
-        default : []
+    image: {
+        type: Array,
+        default: []
     },
-    category : [
+    category: [
         {
-            type : mongoose.Schema.ObjectId,
-            ref : 'category'
+            type: mongoose.Schema.ObjectId,
+            ref: 'category'
         }
     ],
-    subCategory : [
+    subCategory: [
         {
-            type : mongoose.Schema.ObjectId,
-            ref : 'subCategory'
+            type: mongoose.Schema.ObjectId,
+            ref: 'subCategory'
         }
     ],
-    restaurant : [
+    user: [
         {
-            type : mongoose.Schema.ObjectId,
-            ref : 'restaurant'
-        }
-    ],
-    user : [
-        {
-            type : mongoose.Schema.ObjectId,
-            ref : 'user'
+            type: mongoose.Schema.ObjectId,
+            ref: 'user'
         }
     ],
     reviews: [
-        { 
-            type: mongoose.Schema.ObjectId, 
-            ref: "review" 
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: "review"
         }
     ],
-    averageRating: { 
-        type: Number, 
-        default: 0 
+    averageRating: {
+        type: Number,
+        default: 0
     },
-    unit : {
-        type : String,
-        default : ""
+    pricingModel: {
+        type: String,
+        enum: ['fixed', 'per_unit', 'per_hour', 'area_based'],
+        default: 'fixed',
     },
-    price : {
-        type : Number,
-        default : null
+    unitName: {
+        type: String,
+        default: ""
     },
-    discount : {
-        type : Number,
-        default : null
+    BasePrice: {
+        type: Number,
+        default: null
     },
-    description : {
-        type : String,
-        default : ""
+    pricePerUnit: {
+        type: Number
     },
-    more_details : {
-        type : Object,
-        default : {}
+    minUnits: { type: Number, default: 1 },
+    addOns: [AddOnSchema],
+    discount: {
+        type: Number,
+        default: null
     },
-    publish : {
-        type : Boolean,
-        default : true
+    description: {
+        type: String,
+        default: ""
+    },
+    more_details: {
+        type: Object,
+        default: {}
+    },
+    publish: {
+        type: Boolean,
+        default: true
     }
-},{
-    timestamps : true
+}, {
+    timestamps: true
 })
 
 productSchema.index({
-    name : "text",
-    description : "text"
-},{
-    name : 10,
-    description : 5 
+    name: "text",
+    description: "text"
+}, {
+    name: 10,
+    description: 5
 })
 
-const ProductModel = mongoose.model("product",productSchema)
+const ProductModel = mongoose.model("product", productSchema)
 
 export default ProductModel

@@ -32,7 +32,7 @@ export const CashOnDelivery = async (req, res) => {
             totalAmt: totalAmt,
             totalQty: totalQty,
             orderStatus: "Pending",
-            rider: null
+            worker: null
         };
 
         const Order = await OrderModel.insertMany(payload)
@@ -88,21 +88,21 @@ export const fetchAllCashOnDeliv = async (req, res) => {
 export const updateOrderStatus = async (req, res) => {
     const { orderId } = req.params;
     const { orderStatus } = req.body;
-    const riderId = req.userId; // Extract rider ID from authenticated user
+    const workerId = req.userId; 
 
     try {
-        // Fetch the user details
-        const rider = await UserModel.findById(riderId);
+        
+        const worker = await UserModel.findById(workerId);
 
-        if (!rider || rider.role !== "RIDER") {
-            return res.status(403).json({ message: "Only riders can accept orders" });
+        if (!worker || worker.role !== "WORKER") {
+            return res.status(403).json({ message: "Only workers can accept orders" });
         }
 
         const updatedOrder = await OrderModel.findByIdAndUpdate(
             orderId,
-            { orderStatus, rider: riderId }, // Assign Rider
+            { orderStatus, worker: workerId }, 
             { new: true }
-        ).populate("rider", "name mobile"); // Populate Rider Details
+        ).populate("worker", "name mobile"); 
 
         if (!updatedOrder) {
             return res.status(404).json({ message: "Order not found" });
@@ -131,7 +131,7 @@ export const getUserOrders = async (req, res) => {
         const userOrders = await OrderModel.find({ userId: userId })
             .populate("userId")
             .populate("delivery_address")
-            .populate("rider", "name mobile role")
+            .populate("worker", "name mobile role")
             .sort({ createdAt: -1 })
 
         return res.json({

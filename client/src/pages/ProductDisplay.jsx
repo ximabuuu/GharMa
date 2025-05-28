@@ -20,7 +20,17 @@ const ProductDisplay = () => {
   const [data, setData] = useState({
     name: "",
     image: [],
-
+    category: [],
+    subCategory: [],
+    reviews: [],
+    pricingModel: 'fixed',
+    unitName: '',
+    BasePrice: null,
+    pricePerUnit: 0,
+    minUnits: 1,
+    discount: 0,
+    description: '',
+    more_details: {}
   })
   const [image, setImage] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -33,7 +43,6 @@ const ProductDisplay = () => {
 
   const fetchReviews = async () => {
     try {
-      console.log(productId)
       const response = await Axios({
         ...SummaryApi.getReview,
         params: { productId }
@@ -107,7 +116,7 @@ const ProductDisplay = () => {
 
 
   return (
-    <section className='container  p-4 grid lg:grid-cols-2 lg:px-10 '>
+    <section className='container p-4 grid lg:grid-cols-2 lg:px-10 '>
       {/* left part */}
       <div className=' '>
         <div className='bg-white lg:min-h-[67vh] lg:max-h-[67vh] min-h-56 max-h-56 rounded h-full w-full '>
@@ -117,9 +126,7 @@ const ProductDisplay = () => {
           {
             data.image.map((img, index) => {
               return (
-                <div key={img + index + "point"} className={`bg-red-200 w-3 h-3 lg:w-5 lg:h-5 rounded-full ${index === image && "bg-red-300"}`}>
-
-                </div>
+                <div key={img + index + "point"} className={`bg-blue-200 w-3 h-3 lg:w-5 lg:h-5 rounded-full ${index === image && "bg-blue-300"}`}> </div>
               )
             })
           }
@@ -139,7 +146,7 @@ const ProductDisplay = () => {
               })
             }
           </div>
-          <div className='w-full  h-full flex justify-between absolute items-center'>
+          <div className='w-full h-full flex justify-between absolute items-center'>
             <button onClick={handlePrev} className='z-10 bg-white relative p-1 rounded-full shadow-md '>
               <GrFormPreviousLink size={25} />
             </button>
@@ -156,7 +163,7 @@ const ProductDisplay = () => {
           {
             data?.more_details && Object.keys(data?.more_details).map((ele, index) => {
               return (
-                <div>
+                <div key={index}>
                   <p className='font-semibold'>{ele}</p>
                   <p className='text-base'>{data?.more_details[ele]}</p>
                 </div>
@@ -165,63 +172,37 @@ const ProductDisplay = () => {
           }
         </div>
       </div>
+
       {/* right part */}
       <div className='p-4 lg:pl-7 text-base lg:text-lg'>
-        <p className='flex gap-2 bg-red-200 w-fit px-2 rounded-full'><MdDeliveryDining size={28} />30 Min</p>
         <h2 className='font-semibold text-lg lg:text-3xl'>{data.name}</h2>
-        <p className='font-mono'>{data.unit}</p>
         <p className='font-mono'>Average Ratings: ({data.averageRating})⭐</p>
         <Divider />
         <p>Price</p>
         <div className='flex items-center gap-2 lg:gap-4'>
-          <div className='border border-red-800 px-4 py-2 rounded bg-red-50 w-fit'>
-            <p className='font-semibold text-lg lg:text-xl'>Rs. {DiscountedPrice(data.price, data.discount)}</p>
+          <div className='border border-[#4a90e2] px-4 py-2 rounded bg-blue-50 w-fit'>
+            <p className='font-semibold text-lg lg:text-xl'>
+              Rs. {DiscountedPrice(data.BasePrice, data.discount)}
+            </p>
           </div>
           {
             data.discount !== 0 && (
-              <p className='line-through'>Rs. {data.price}</p>
+              <p className='line-through'>Rs. {data.BasePrice}</p>
             )
           }
           {
             data.discount !== 0 && (
-              <p className='text-red-800 font-bold lg:text-2xl'>{data.discount}% <span className='text-base text-neutral-500'>Discount</span></p>
+              <p className='text-[#4a90e2] font-bold lg:text-2xl'>{data.discount}% <span className='text-base text-neutral-500'>Discount</span></p>
             )
           }
         </div>
         <div className='my-2'>
           <AddToCart data={data} />
-        </div>           {/*  <button className='my-4 px-4 py-1 bg-red-800 text-white rounded border border-red-800 hover:bg-red-600'>Add</button>  */}
+        </div>
 
+        
+        
 
-        <Divider />
-        <h2 className='font-semibold'>Why order from Khaja?</h2>
-        <div>
-          <div className='flex items-center gap-4 my-2'>
-            <img src={deliver} alt="Fast Delivery" className='w-20 h-20' />
-            <div className='text-sm'>
-              <div className='font-semibold'>Ultra-Fast Delivery</div>
-              <p>Get Your order delivered to your doorstep from Khaja.</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className='flex items-center gap-4 my-2'>
-            <img src={bestPrice} alt="Best prices" className='w-20 h-20' />
-            <div className='text-sm'>
-              <div className='font-semibold'>Best Prices & Offers</div>
-              <p>Get the best prices and exclusive offers - shop now from Khaja and save big!</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className='flex items-center gap-4 my-2'>
-            <img src={assortment} alt="Varied Assortment" className='w-20 h-20' />
-            <div className='text-sm'>
-              <div className='font-semibold'>Varied Assortment</div>
-              <p>Enjoy a varied assortment of cuisines from multiple restaurants.</p>
-            </div>
-          </div>
-        </div>
         <div className='my-2 lg:hidden grid gap-3'>
           <div>
             <p className='font-semibold'>Descriptions</p>
@@ -230,7 +211,7 @@ const ProductDisplay = () => {
           {
             data?.more_details && Object.keys(data?.more_details).map((ele, index) => {
               return (
-                <div>
+                <div key={index}>
                   <p className='font-semibold'>{ele}</p>
                   <p className='text-base'>{data?.more_details[ele]}</p>
                 </div>
@@ -238,6 +219,7 @@ const ProductDisplay = () => {
             })
           }
         </div>
+
         <Divider />
         <h2 className='font-semibold'>Customer Reviews</h2>
 
@@ -266,12 +248,12 @@ const ProductDisplay = () => {
           </div>
           <textarea
             className='w-full p-2 border rounded'
-            rows='3'
+            rows={3}
+            placeholder='Write your review'
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
-            placeholder='Write your review here...'
           />
-          <button onClick={handleReviewSubmit} className='mt-2 px-4 py-2 bg-red-800 text-white rounded hover:bg-red-600'>
+          <button onClick={handleReviewSubmit} className='mt-2 px-4 py-2 bg-blue-500 text-white rounded'>
             Submit Review
           </button>
         </div>

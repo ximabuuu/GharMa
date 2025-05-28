@@ -73,15 +73,15 @@ const ForgotPassword = () => {
         <form className='grid gap-4 mt-6' onSubmit={handleSubmit}>
             <div className='grid gap-1'>
                 <label htmlFor="email">Email</label>
-                <input type="email" className='bg-blue-50 p-2 border outline-none focus:border-red-800 rounded' name="email" id="email" placeholder='Enter Your Email' autoFocus value={data.email} onChange={handleChange} />
+                <input type="email" className='bg-blue-50 p-2 border outline-none focus:border-[#4A90E2] rounded' name="email" id="email" placeholder='Enter Your Email' autoFocus value={data.email} onChange={handleChange} />
             </div>
         
             
 
-            <button disabled={!filled} className={`${filled ? "bg-red-800 hover:bg-red-600" : "bg-gray-600"} text-white py-2 rounded font-semibold my-3 tracking-widest`}>Send OTP</button>
+            <button disabled={!filled} className={`${filled ? "bg-[#4A90E2] hover:bg-blue-700" : "bg-gray-600"} text-white py-2 rounded font-semibold my-3 tracking-widest`}>Send OTP</button>
             
         </form>
-        <p> Already have an Account? <Link to={"/login"} className='font-semibold text-red-800 hover:text-red-600'>Login</Link></p> 
+        <p> Already have an Account? <Link to={"/login"} className='font-semibold text-[#4A90E2] hover:text-blue-700'>Login</Link></p> 
       </div>
     </section>
   )

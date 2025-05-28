@@ -4,7 +4,6 @@ const initialValue = {
     allCategory : [],
     loadingCategory : false,
     allSubCategory : [],
-    restaurant : [],
     product : []
 }
 
@@ -21,12 +20,9 @@ const productSlice = createSlice({
         setAllSubCategory : (state,action)=>{
             state.allSubCategory = [...action.payload]
         },
-        setRestaurant : (state,action)=>{
-            state.restaurant = [...action.payload]
-        }
     }
 })
 
-export const {setAllCategory,setAllSubCategory,setRestaurant,setLoadingCategory} = productSlice.actions
+export const {setAllCategory,setAllSubCategory,setLoadingCategory} = productSlice.actions
 
 export default productSlice.reducer

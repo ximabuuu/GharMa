@@ -77,7 +77,7 @@ const Otp = () => {
                     {
                         data.map((element,index)=>{
                             return(
-                                <input key={"otp"+index} type="text" className='bg-blue-50 w-full max-w-16 p-2 border outline-none focus:border-red-800 rounded text-center font-semibold' id="otp" ref={(ref)=>{
+                                <input key={"otp"+index} type="text" className='bg-blue-50 w-full max-w-16 p-2 border outline-none focus:border-[#4A90E2] rounded text-center font-semibold' id="otp" ref={(ref)=>{
                                     inputRef.current[index] = ref
                                     return ref
 
@@ -102,10 +102,10 @@ const Otp = () => {
         
             
 
-            <button disabled={!filled} className={`${filled ? "bg-red-800 hover:bg-red-600" : "bg-gray-600"} text-white py-2 rounded font-semibold my-3 tracking-widest`}>Verify OTP</button>
+            <button disabled={!filled} className={`${filled ? "bg-[#4A90E2] hover:bg-blue-700" : "bg-gray-600"} text-white py-2 rounded font-semibold my-3 tracking-widest`}>Verify OTP</button>
             
         </form>
-        <p> Already have an Account? <Link to={"/login"} className='font-semibold text-red-800 hover:text-red-600'>Login</Link></p> 
+        <p> Already have an Account? <Link to={"/login"} className='font-semibold text-[#4A90E2] hover:text-blue-700'>Login</Link></p> 
       </div>
     </section>
   )

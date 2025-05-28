@@ -10,7 +10,6 @@ import userRouter from './route/user.route.js'
 import categoryRouter from './route/category.route.js'
 import uploadRouter from './route/upload.route.js'
 import subCategoryRouter from './route/subCategory.route.js'
-import restaurantRouter from './route/restaurant.route.js'
 import productRouter from './route/product.route.js'
 import cartRouter from './route/cart.route.js'
 import reviewRouter from './route/review.route.js'
@@ -45,7 +44,6 @@ app.use('/api/user',userRouter)
 app.use('/api/category',categoryRouter)
 app.use('/api/file',uploadRouter)
 app.use('/api/subcategory',subCategoryRouter)
-app.use('/api/restaurant',restaurantRouter)
 app.use('/api/product',productRouter)
 app.use('/api/cart',cartRouter)
 app.use('/api/review',reviewRouter)

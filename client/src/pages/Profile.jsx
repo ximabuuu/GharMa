@@ -72,7 +72,7 @@ const Profile = () => {
 
     return (
         <div className='p-4'>
-            <div className='w-22 h-22 bg-red-800 flex items-center justify-center rounded-full overflow-hidden'>
+            <div className='w-22 h-22 bg-[#4A90E2] flex items-center justify-center rounded-full overflow-hidden'>
                 {
                     user.avatar ? (
                         <img className='w-full h-full' src={user.avatar} alt={user.name} />
@@ -81,7 +81,7 @@ const Profile = () => {
                     )
                 }
             </div>
-            <button onClick={() => setOpenProfileEdit(true)} className='text-sm min-w-22 border hover:bg-red-800 hover:text-white border-red-800 px-3 py-1 rounded-full mt-3'>Edit</button>
+            <button onClick={() => setOpenProfileEdit(true)} className='text-sm min-w-22 border hover:bg-[#4A90E2] hover:text-white border-[#4A90E2] px-3 py-1 rounded-full mt-3'>Edit</button>
             {
                 openProfileEdit && (
                     <ProfileEdit close={() => setOpenProfileEdit(false)} />
@@ -114,7 +114,7 @@ const Profile = () => {
                     />
                 </div>
 
-                <button className='border px-4 py-2 font-semibold bg-white hover:bg-red-800 hover:text-white border-red-800'>
+                <button className='border px-4 py-2 font-semibold bg-white hover:bg-[#4A90E2] hover:text-white border-[#4A90E2]'>
                     {
                         loading ? "Ekxin Pakh" : "Submit"
                     }

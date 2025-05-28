@@ -75,7 +75,7 @@ const ProductByCategory = ({ id, name }) => {
         <div>
             <div className='container mx-auto p-4 flex items-center justify-between gap-4'>
                 <h3 className='font-semibold lg:text-2xl md:text-lg'>{name}</h3>
-                <Link to={redirectUrl} className='font-medium text-red-800 hover:text-red-600'>See All</Link>
+                <Link to={redirectUrl} className='font-medium text-[#4A90E2] hover:text-blue-700'>See All</Link>
             </div>
             <div className='relative flex items-center'>
                 <div ref={containerRef} className='flex gap-4 md:gap-6 lg:gap-8 container mx-auto p-4 overflow-x-scroll scrollBarNone lg:overflow-hidden scroll-smooth '>
@@ -96,8 +96,8 @@ const ProductByCategory = ({ id, name }) => {
 
                 </div>
                 <div className='w-full left-0 right-0 container mx-auto px-2 absolute hidden lg:flex justify-between max-w-full'>
-                    <button onClick={handleScrollLeft} className='z-10 relative bg-red-100 hover:bg-gray-200 shadow-lg p-2 rounded-full text-lg'><GrFormPreviousLink size={20} /></button>
-                    <button onClick={handleScrollRight} className='z-10 relative bg-red-100 hover:bg-gray-200 shadow-lg p-2 rounded-full text-lg'><GrFormNextLink size={20} /></button>
+                    <button onClick={handleScrollLeft} className='z-10 relative bg-blue-100 hover:bg-gray-200 shadow-lg p-2 rounded-full text-lg'><GrFormPreviousLink size={20} /></button>
+                    <button onClick={handleScrollRight} className='z-10 relative bg-blue-100 hover:bg-gray-200 shadow-lg p-2 rounded-full text-lg'><GrFormNextLink size={20} /></button>
                 </div>
             </div>
         </div>

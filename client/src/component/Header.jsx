@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import logo from '../assets/logo.png'
+import logo from '../assets/logoo.png'
 import Search from './Search'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
@@ -66,13 +66,27 @@ const Header = () => {
                     <div className='container mx-auto flex items-center px-6 justify-between'>
                         <div>
                             <Link to={"/"} className='flex justify-center items-center'>
-                                <img src={logo} alt="Logo" width={95} className='hidden lg:block' />
-                                <img src={logo} alt="Logo" width={65} className='lg:hidden' />
+                                <img src={logo} alt="Logo" width={90} className='hidden lg:block' />
+                                <img src={logo} alt="Logo" width={90} className='lg:hidden' />
                             </Link>
                         </div>
-                        <div className='hidden lg:block'>
-                            <Search />
+                        <div className='flex items-center gap-0.5 lg:gap-20 font-semibold lg:text-[18px]'>
+                            <div>
+                                <Link>Home</Link>
+                            </div>
+                            <div>
+                                <Link>Services</Link>
+                            </div>
+                            <div>
+                                <Link to={"aboutus"}>About</Link>
+                            </div>
+                            <div>
+                                <Link to={'contact'}>Contact</Link>
+                            </div>
                         </div>
+                        {/* <div className='hidden lg:block'>
+                            <Search />
+                        </div> */}
                         <div>
                             {/**mobile **/}
                             <button className='lg:hidden' onClick={handleMobileUser}>
@@ -106,10 +120,10 @@ const Header = () => {
 
                                         </div>
                                     ) : (
-                                        <button onClick={redirectToLoginPage} className='text-lg px-3 hover:text-red-800  '>Login</button>
+                                        <button onClick={redirectToLoginPage} className='text-lg px-3 hover:text-[#4A90E2]  '>Login</button>
                                     )
                                 }
-                                <button onClick={()=>setOpenCart(true)} className='flex items-center gap-2 bg-red-800 hover:bg-red-600 py-2 px-3 rounded text-white'>
+                                <button onClick={()=>setOpenCart(true)} className='flex items-center gap-2 bg-[#4A90E2] hover:bg-sky-600 py-2 px-3 rounded text-white'>
                                     <div className='animate-bounce'>
                                         <BsCart4 size={28} />
                                     </div>
@@ -132,9 +146,7 @@ const Header = () => {
                     </div>
                 )
             }
-            <div className='container mx-auto px-2 lg:hidden'>
-                <Search />
-            </div>
+            
 
             {
                 openCart && (

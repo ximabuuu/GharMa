@@ -22,7 +22,7 @@ const Search = () => {
 
     
 
-    const redirectToSearch = ()=>{
+    const blueirectToSearch = ()=>{
         navigate("/search")
     }
 
@@ -34,15 +34,16 @@ const Search = () => {
 
   return (
     <div className='w-full min-w-[300px] lg:min-w-[420px] h-10 lg:h-12 rounded-lg border overflow-hidden flex items-center text-neutral-500 bg-gray-200 group focus-within:border-black'>
+        
       <div>
 
         {
             (isMobile && isSearchPage) ? (
-                <Link to={"/"} className='flex justify-center items-center h-full p-3 group-focus-within:text-red-600 border-red-800'>
+                <Link to={"/"} className='flex justify-center items-center h-full p-3 group-focus-within:text-[#4a90e2] border-blue-800'>
                     <FaArrowCircleLeft size={28} />
                 </Link>
             ) : (
-                <button className='flex justify-center items-center h-full p-3 group-focus-within:text-red-800 border-red-800'>
+                <button className='flex justify-center items-center h-full p-3 group-focus-within:text-[#4a90e2] border-blue-800'>
                     <IoSearchCircleSharp size={30} />
                 </button>
             )
@@ -53,21 +54,21 @@ const Search = () => {
       <div className='w-full h-full'>
         {
             !isSearchPage ? (
-                <div onClick={redirectToSearch} className='w-full h-full flex items-center'>
+                <div onClick={blueirectToSearch} className='w-full h-full flex items-center'>
                     <TypeAnimation
                         sequence={[
                             // Same substring at the start will only be typed out once, initially
-                            'Search "Mo:Mo"',
+                            'Search "Plumber"',
                             1000, // wait 1s 
-                            'Search "Sekuwa"',
+                            'Search "Electrician"',
                             1000,
-                            'Search "Chowmein"',
+                            'Search "Carpenter"',
                             1000,
-                            'Search "Thukpa"',
+                            'Search "Painter"',
                             1000,
-                            'Search "Drinks"',
+                            'Search "Technician"',
                             1000,
-                            'Search "Desserts"',
+                            'Search "Makeup Artist"',
                             1000
                         ]}
                             wrapper="span"

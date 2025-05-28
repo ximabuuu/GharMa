@@ -57,12 +57,12 @@ const Orders = () => {
               </div>
               <p>Order Status: <strong>{order.orderStatus}</strong></p>
 
-              {/* Show Rider Information if Order is Accepted */}
-              {order.orderStatus !== "Pending" && order.rider && (
+              {/* Show Worker Information if Order is Accepted */}
+              {order.orderStatus !== "Pending" && order.worker && (
                 <div className="mt-2 p-2 bg-blue-100 rounded">
-                  <p className="font-semibold">Rider Information:</p>
-                  <p>Name: {order.rider.name}</p>
-                  <p>Mobile: {order.rider.mobile}</p>
+                  <p className="font-semibold">Worker Information:</p>
+                  <p>Name: {order.worker.name}</p>
+                  <p>Mobile: {order.worker.mobile}</p>
                 </div>
               )}
             </div>
@@ -92,12 +92,12 @@ const Orders = () => {
                 </ul>
               </div>
               <p>Order Status: <strong>{transaction.orderStatus}</strong></p>
-              {/* Show Rider Information if Order is Accepted */}
-              {transaction.orderStatus !== "Pending" && transaction.rider && (
+              {/* Show Worker Information if Order is Accepted */}
+              {transaction.orderStatus !== "Pending" && transaction.worker && (
                 <div className="mt-2 p-2 bg-blue-100 rounded">
-                  <p className="font-semibold">Rider Information:</p>
-                  <p>Name: {transaction.rider.name}</p>
-                  <p>Mobile: {transaction.rider.mobile}</p>
+                  <p className="font-semibold">Worker Information:</p>
+                  <p>Name: {transaction.worker.name}</p>
+                  <p>Mobile: {transaction.worker.mobile}</p>
                 </div>
               )}
             </div>

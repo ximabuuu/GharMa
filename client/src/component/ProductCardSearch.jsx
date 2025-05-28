@@ -55,9 +55,7 @@ const ProductCard = ({ data }) => {
           <img src={data.image[0]} alt="product image" className='w-full h-full object-scale-down lg:scale-110 rounded' />
         </div>
         <div className='flex items-center lg:justify-between'>
-          <div className='flex gap-1 rounded text-xs mx-2 lg:mx-0 lg:text-sm w-fit px-1 p-[1px] text-red-800 bg-red-50'>
-            <MdDeliveryDining size={17} className='' /> 30 Mins
-          </div>
+          
           <div>
             {
               data.discount !== 0 && (
@@ -74,7 +72,7 @@ const ProductCard = ({ data }) => {
         </div>
         <div className=' flex items-center justify-between gap-1 lg:gap-3 text-sm lg:text-base px-2 lg:px-0 '>
           <div className='lg:font-semibold font-medium '>
-            Rs.{DiscountedPrice(data.price, data.discount)}
+            Rs.{DiscountedPrice(data.BasePrice, data.discount)}
           </div>
           <div className=''>
             <AddToCart data={data}/>

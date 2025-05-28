@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import fetchUserDetails from './utils/fetchUserDetails';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
-import { setAllCategory, setAllSubCategory, setLoadingCategory, setRestaurant } from './redux/productSlice';
+import { setAllCategory, setAllSubCategory, setLoadingCategory } from './redux/productSlice';
 import Axios from './utils/axios';
 import SummaryApi from './config/SummaryApi.js';
 import { handleAddCart } from './redux/cartStore';
@@ -57,18 +57,7 @@ function App() {
     }
   }
 
-  const fetchRestaurant = async () => {
-    try {
-      const response = await Axios({
-        ...SummaryApi.getRestaurant
-      })
-      const { data: responseData } = response
-      if (responseData.success) {
-        dispatch(setRestaurant(responseData.data))
-      }
-    } catch (error) {
-    }
-  }
+  
 
   const fetchCartItem = async () => {
     try {
@@ -90,7 +79,6 @@ function App() {
     fetchUser()
     fetchCategory()
     fetchSubCategory()
-    fetchRestaurant()
   }, [])
 
   return (

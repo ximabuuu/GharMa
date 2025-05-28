@@ -9,7 +9,6 @@ const OrdersUser = () => {
     const [data, setData] = useState([])
     const [cash, setCash] = useState([])
     const [orders, setOrders] = useState([]);
-
     useEffect(() => {
         fetch("/api/orders")
             .then((res) => res.json())

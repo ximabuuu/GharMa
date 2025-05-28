@@ -41,22 +41,6 @@ const SummaryApi = {
         url: '/api/user/update-user',
         method: 'PUT'
     },
-    addRestaurant: {
-        url: '/api/restaurant/add',
-        method: 'POST'
-    },
-    getRestaurant: {
-        url: '/api/restaurant/get',
-        method: 'GET'
-    },
-    updateRestaurant: {
-        url: '/api/restaurant/update',
-        method: 'PUT'
-    },
-    deleteREstaurant: {
-        url: '/api/restaurant/delete',
-        method: 'DELETE'
-    },
     addCategory: {
         url: '/api/category/add-category',
         method: 'POST'

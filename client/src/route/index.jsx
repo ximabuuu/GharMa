@@ -16,7 +16,6 @@ import Category from '../pages/Category.jsx'
 import SubCategory from '../pages/SubCategory.jsx'
 import AddProduct from '../pages/AddProduct.jsx'
 import Products from '../pages/Products.jsx'
-import Restaurant from '../pages/Restaurant.jsx'
 import AdminPerm from '../layouts/AdminPerm.jsx'
 import ProductListPage from '../pages/ProductListPage.jsx'
 import ProductDisplay from '../pages/ProductDisplay.jsx'
@@ -30,8 +29,8 @@ import AboutUs from '../component/AboutUs.jsx'
 import ContactUs from '../component/ContactUs.jsx'
 import PrivacyPolicy from '../component/PrivacyPolicy.jsx'
 import PopUp from '../pages/PopUp.jsx'
-import RiderPerm from '../layouts/RiderPerm.jsx'
 import OrdersUser from '../pages/OrdersUser.jsx'
+import WorkerPerm from '../layouts/WorkerPerm.jsx'
 
 const router = createBrowserRouter([
     {
@@ -103,10 +102,6 @@ const router = createBrowserRouter([
                         element : <AdminPerm><Products/></AdminPerm>
                     },
                     {
-                        path : "restaurant",
-                        element : <AdminPerm><Restaurant/></AdminPerm>
-                    },
-                    {
                         path : "allorders",
                         element : <AdminPerm><OrdersAdmin/></AdminPerm>
                     },
@@ -116,7 +111,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path : "orders",
-                        element : <RiderPerm><OrdersUser/></RiderPerm>
+                        element : <WorkerPerm><OrdersUser/></WorkerPerm>
                     }
                 ]
             },

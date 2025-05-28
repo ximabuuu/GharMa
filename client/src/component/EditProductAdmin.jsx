@@ -19,7 +19,6 @@ const EditProductAdmin = ({ close, data: propsData,fetchProductData }) => {
         image: propsData.image,
         category: propsData.category,
         subCategory: propsData.subCategory,
-        restaurant: propsData.restaurant,
         unit: propsData.unit,
         stock: propsData.stock,
         price: propsData.price,
@@ -34,7 +33,6 @@ const EditProductAdmin = ({ close, data: propsData,fetchProductData }) => {
     const [selectSubCat, setSelectSubCat] = useState("")
     const allSubCategory = useSelector(state => state.product.allSubCategory)
     const [selectRestro, setSelectRestro] = useState("")
-    const restaurant = useSelector(state => state.product.restaurant)
 
     const [openMoreField, setOpenMoreField] = useState(false)
     const [fieldName, setFieldName] = useState("")
@@ -98,14 +96,7 @@ const EditProductAdmin = ({ close, data: propsData,fetchProductData }) => {
         })
     }
 
-    const handleDelRestro = async (index) => {
-        data.restaurant.splice(index, 1)
-        setData((preve) => {
-            return {
-                ...preve
-            }
-        })
-    }
+    
 
     const handleAddField = async (index) => {
         setData((preve) => {
@@ -144,7 +135,6 @@ const EditProductAdmin = ({ close, data: propsData,fetchProductData }) => {
                     image: [],
                     category: [],
                     subCategory: [],
-                    restaurant: [],
                     unit: "",
                     stock: "",
                     price: "",
@@ -304,48 +294,7 @@ const EditProductAdmin = ({ close, data: propsData,fetchProductData }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className='grid gap-1'>
-                                <label htmlFor="" className='font-medium'>Restaurant</label>
-                                <div>
-                                    <select name="" id="" value={selectRestro} onChange={(e) => {
-                                        const value = e.target.value
-                                        const Restro = restaurant.find(el => el._id === value)
-
-
-                                        setData((preve) => {
-                                            return {
-                                                ...preve,
-                                                restaurant: [...preve.restaurant, Restro]
-                                            }
-                                        })
-                                        setSelectSubCat("")
-
-                                    }} className='bg-blue-50 w-full border p-2 rounded border-blue-200'>
-                                        <option value={""}>Select Restaurant</option>
-                                        {
-                                            restaurant.map((restro, index) => {
-                                                return (
-                                                    <option value={restro?._id} key={restro?._id + index + "restaurant"}>{restro.name}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    <div className='flex flex-wrap gap-3'>
-                                        {
-                                            data.restaurant.map((restro, index) => {
-                                                return (
-                                                    <div key={restro._id + index + "restro"} className='text-sm flex items-center gap-1 bg-blue-50 mt-1'>
-                                                        <p>{restro?.name}</p>
-                                                        <div className='hover:text-red-800 cursor-pointer' onClick={() => handleDelRestro(index)}>
-                                                            <IoMdCloseCircle size={15} />
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div className='grid gap-1'>
                                 <label htmlFor='unit' className='font-medium'>Unit</label>
                                 <input id='unit' type="text" name='unit' placeholder='Enter Product Unit' value={data.unit} onChange={handleChange} required
