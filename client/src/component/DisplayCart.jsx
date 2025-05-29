@@ -27,7 +27,6 @@ const DisplayCart = ({ close }) => {
     toast("You are not Logged in yet.")
   }
 
-
   const getDeliveryCharge = () => {
     const now = new Date();
     const currentHour = now.getHours();
@@ -37,6 +36,50 @@ const DisplayCart = ({ close }) => {
   const deliveryCharge = getDeliveryCharge()
 
   const showLateNightNotice = new Date().getHours() >= 23;
+
+  // Helper function to calculate item price based on pricing model
+  const calculateItemPrice = (cartItem) => {
+    const product = cartItem.productId;
+    let itemPrice = 0;
+
+    if (product.pricingModel === 'fixed') {
+      itemPrice = product.BasePrice || product.price || 0;
+    } else if (product.pricingModel === 'per_unit') {
+      const units = cartItem.selectedUnits || 1;
+      itemPrice = (product.BasePrice || 0) + (product.pricePerUnit * units);
+    } else if (product.pricingModel === 'per_hour') {
+      const hours = cartItem.selectedUnits || 1;
+      itemPrice = (product.BasePrice || 0) + (product.pricePerUnit * hours);
+    } else if (product.pricingModel === 'area_based') {
+      const area = cartItem.selectedUnits || 1;
+      itemPrice = (product.BasePrice || 0) + (product.pricePerUnit * area);
+    } else {
+      // Fallback to legacy price field
+      itemPrice = product.price || 0;
+    }
+
+    // Add selected add-ons
+    if (cartItem.selectedAddOns && cartItem.selectedAddOns.length > 0) {
+      const addOnPrice = cartItem.selectedAddOns.reduce((sum, addOnId) => {
+        const addOn = product.addOns?.find(addon => addon._id === addOnId);
+        return sum + (addOn ? addOn.price : 0);
+      }, 0);
+      itemPrice += addOnPrice;
+    }
+
+    // Apply discount
+    return DiscountedPrice(itemPrice, product.discount || 0);
+  };
+
+  // Helper function to get pricing model label
+  const getPricingModelLabel = (pricingModel, unitName) => {
+    switch (pricingModel) {
+      case 'per_unit': return unitName || 'unit';
+      case 'per_hour': return 'hour';
+      case 'area_based': return 'sq ft';
+      default: return '';
+    }
+  };
 
   return (
     <section className='bg-neutral-900/50 fixed top-0 right-0 left-0 bottom-0 z-50'>
@@ -58,18 +101,59 @@ const DisplayCart = ({ close }) => {
                   {
                     cartItem[0] && (
                       cartItem.map((i, index) => {
+                        const itemPrice = calculateItemPrice(i);
+                        const product = i?.productId;
+                        
                         return (
-                          <div key={i._id + "cart" + index} className='flex w-full gap-4 items-center '>
+                          <div key={i._id + "cart" + index} className='flex w-full gap-4 items-start '>
                             <div className='w-15 h-15 min-w-16 min-h-16 border rounded'>
-                              <img src={i?.productId?.image[0]} alt="" className='object-scale-down' />
+                              <img src={product?.image[0]} alt="" className='object-scale-down' />
                             </div>
                             <div className='w-full max-w-sm'>
-                              <p className='text-ellipsis line-clamp-1'>{i?.productId?.name}</p>
-                              <p className='text-xs text-slate-700'>{i?.productId?.unit}</p>
-                              <p className='text-sm font-semibold'>Rs. {DiscountedPrice(i?.productId?.price, i?.productId?.discount)}</p>
+                              <p className='text-ellipsis line-clamp-1 font-medium'>{product?.name}</p>
+                              
+                              {/* Enhanced pricing display */}
+                              {product?.pricingModel !== 'fixed' && i.selectedUnits && (
+                                <p className='text-xs text-slate-600'>
+                                  {i.selectedUnits} {getPricingModelLabel(product.pricingModel, product.unitName)}
+                                  {i.selectedUnits > 1 ? 's' : ''}
+                                </p>
+                              )}
+                              
+                              {/* Show selected add-ons */}
+                              {i.selectedAddOns && i.selectedAddOns.length > 0 && (
+                                <div className='text-xs text-green-600 mt-1'>
+                                  {i.selectedAddOns.map(addOnId => {
+                                    const addOn = product?.addOns?.find(addon => addon._id === addOnId);
+                                    return addOn ? (
+                                      <p key={addOnId} className='flex justify-between'>
+                                        <span>+ {addOn.name}</span>
+                                        <span>Rs. {addOn.price}</span>
+                                      </p>
+                                    ) : null;
+                                  })}
+                                </div>
+                              )}
+                              
+                              <p className='text-sm font-semibold mt-1'>Rs. {itemPrice}</p>
+                              
+                              {/* Show original price if there's a discount */}
+                              {product?.discount > 0 && (
+                                <p className='text-xs text-gray-500 line-through'>
+                                  Rs. {product.pricingModel === 'fixed' 
+                                    ? product.BasePrice || product.price
+                                    : (product.BasePrice || 0) + (product.pricePerUnit * (i.selectedUnits || 1))
+                                  }
+                                </p>
+                              )}
                             </div>
                             <div>
-                              <AddToCart data={i?.productId} />
+                              <AddToCart data={{
+                                ...product,
+                                selectedUnits: i.selectedUnits,
+                                selectedAddOns: i.selectedAddOns,
+                                totalPrice: itemPrice
+                              }} />
                             </div>
                           </div>
                         )
@@ -81,7 +165,12 @@ const DisplayCart = ({ close }) => {
                   <h3 className='font-semibold'>Bill Details</h3>
                   <div className='flex gap-4 justify-between ml-1'>
                     <p>Total Items</p>
-                    <p className='font-medium flex items-center gap-2'><span className='line-through text-neutral-700'>Rs. {originalPriceTotal}</span><span>Rs. {totalPrice}</span></p>
+                    <p className='font-medium flex items-center gap-2'>
+                      {originalPriceTotal !== totalPrice && (
+                        <span className='line-through text-neutral-700'>Rs. {originalPriceTotal}</span>
+                      )}
+                      <span>Rs. {totalPrice}</span>
+                    </p>
                   </div>
                   <div className='flex gap-4 justify-between ml-1'>
                     <p>Total Quantity</p>

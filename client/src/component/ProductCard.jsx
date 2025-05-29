@@ -70,7 +70,7 @@ const ProductCard = ({ data }) => {
         </div>
         <div className=' flex items-center justify-between gap-1 lg:gap-3 text-sm lg:text-base px-2 lg:px-0 '>
           <div className='lg:font-semibold font-medium '>
-            Rs.{DiscountedPrice(data.price, data.discount)}
+            Rs.{DiscountedPrice(data.BasePrice, data.discount)}
           </div>
           <div className=''>
             <AddToCart data={data} />

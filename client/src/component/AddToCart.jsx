@@ -24,11 +24,28 @@ const AddToCart = ({ data }) => {
 
         try {
             setLoading(true)
+            
+            // Prepare cart item data with enhanced pricing information
+            const cartData = {
+                productId: data?._id
+            }
+
+            // Add pricing model specific data if available
+            if (data.selectedUnits) {
+                cartData.selectedUnits = data.selectedUnits
+            }
+            
+            if (data.selectedAddOns && data.selectedAddOns.length > 0) {
+                cartData.selectedAddOns = data.selectedAddOns
+            }
+            
+            if (data.totalPrice) {
+                cartData.totalPrice = data.totalPrice
+            }
+
             const response = await Axios({
                 ...SummaryApi.addtocart,
-                data: {
-                    productId: data?._id
-                }
+                data: cartData
             })
 
             const { data: responseData } = response
